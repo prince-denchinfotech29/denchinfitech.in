@@ -1,6 +1,6 @@
 // src/api/index.ts
 
-const BASE_URL = 'https://denchinfotech.in/admin/api'
+const BASE_URL = 'https://denchinfotech.in/react/admin/api'
 
 export interface PortfolioItem {
   id: number

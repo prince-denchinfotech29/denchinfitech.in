@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://denchinfotech.in/admin/api';
+const BASE_URL = 'https://denchinfotech.in/react/admin/api';
 
 // Home Data
 export async function fetchHome() {
