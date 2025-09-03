@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect, useRef, useCallback, MouseEvent, TouchEvent } from "react";
+import Image from "next/image";
 
 interface Slide {
   photo: string;
@@ -12,26 +13,25 @@ interface CarouselProps {
 }
 
 export default function Carousel({ homeSlider = [] }: CarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [startX, setStartX] = useState<number>(0);
-  const [dragOffset, setDragOffset] = useState<number>(0);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autoplayTimeout = 1000;
+  const autoplayInterval = 4000; // ⬅️ Changed to 4 seconds
 
+  // Resize check
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Auto play logic
   useEffect(() => {
     if (isPaused || isDragging || homeSlider.length === 0) {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -40,7 +40,7 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
 
     timeoutRef.current = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % homeSlider.length);
-    }, autoplayTimeout);
+    }, autoplayInterval);
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -53,17 +53,14 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
     setIsPaused(true);
   }, []);
 
-  const onDragMove = useCallback(
-    (clientX: number) => {
-      if (!isDragging) return;
-      setDragOffset(startX - clientX);
-    },
-    [isDragging, startX]
-  );
+  const onDragMove = useCallback((clientX: number) => {
+    if (!isDragging) return;
+    setDragOffset(startX - clientX);
+  }, [isDragging, startX]);
 
   const endDrag = useCallback(() => {
     if (!isDragging) return;
-    const threshold = 100;
+    const threshold = 50;
 
     if (Math.abs(dragOffset) > threshold) {
       setCurrentIndex((prev) =>
@@ -78,7 +75,7 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
     setIsPaused(false);
   }, [dragOffset, homeSlider.length, isDragging]);
 
-  // Mouse event handlers
+  // Handlers
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => startDrag(e.clientX);
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => onDragMove(e.clientX);
   const handleMouseUp = () => endDrag();
@@ -87,12 +84,11 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
     setIsPaused(false);
   };
 
-  // Touch event handlers
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => startDrag(e.touches[0].clientX);
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => onDragMove(e.touches[0].clientX);
   const handleTouchEnd = () => endDrag();
 
-  const heightClass = isMobile ? "h-[25vh]" : "h-[100vh]";
+  const heightClass = isMobile ? "h-[25vh]" : "h-[80vh]"; // reduced from 100vh to avoid CLS
 
   return (
     <div
@@ -105,26 +101,31 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      draggable={false}
     >
       {homeSlider.map((slide, idx) => (
-        <img
+        <div
           key={idx}
-          src={slide.photo}
-          alt={slide.heading || `Slide ${idx + 1}`}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+          className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
             idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
           style={{
-            transitionProperty: isDragging ? "none" : "opacity",
             transform:
               isDragging && idx === currentIndex
                 ? `translateX(${-dragOffset}px)`
                 : "translateX(0)",
+            transitionProperty: isDragging ? "none" : "opacity, transform",
           }}
-          loading="lazy"
-          draggable={false}
-        />
+        >
+          <Image
+            src={slide.photo}
+            alt={slide.heading || `Slide ${idx + 1}`}
+            fill
+            className="object-cover"
+            priority={idx === 0} // first image gets priority load
+            loading={idx === 0 ? "eager" : "lazy"}
+            draggable={false}
+          />
+        </div>
       ))}
     </div>
   );

@@ -1,7 +1,10 @@
+"use client";
+
 import { useState, useRef, useEffect, FC } from "react";
 import { Play, Pause, Maximize2, Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 interface HomeAbout {
   about_heading?: string;
@@ -18,9 +21,7 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
   const heading = homeAbout.about_heading || "About Us";
   const content = homeAbout.about_content || "No content available.";
 
-  // Use Next.js public folder for static assets or env var with NEXT_PUBLIC_
-  const imageSrc1x = "/imges/aboutus-Dench572_245.png"; // regular
-  const imageSrc2x = "/imges/aboutus-Dench.webp";       // retina
+  const imageSrc1x = "/imges/aboutus-Dench.webp"; // your image path
   const videoSrc = "/imges/DenchVideo.mp4";
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -59,20 +60,19 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
   }, []);
 
   return (
-    <section id="about" className="container mx-auto px-4 py-12 lg:py-20 mt-16">
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Video or Thumbnail */}
-        <div className="relative aspect-[2.33] bg-black/50 rounded-lg overflow-hidden">
+    <section id="about" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 mt-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        {/* Video/Image Area */}
+        <div className="relative w-full aspect-video bg-black/50 rounded-lg overflow-hidden">
           {!isPlaying ? (
             <>
-              <img
+              <Image
                 src={imageSrc1x}
                 alt="About Us"
-                className="w-full h-full object-cover"
-                loading="lazy"
-                draggable={false}
-                srcSet={`${imageSrc1x} 1x, ${imageSrc2x} 2x`}
-                sizes="(max-width: 768px) 100vw, 570px"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 570px"
+                className="object-cover"
+                priority={true}
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <Button
@@ -81,7 +81,7 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
                   onClick={() => setIsPlaying(true)}
                   aria-label="Play video"
                 >
-                  <Play className="h-6 w-6 ml-1 text-white" />
+                  <Play className="h-6 w-6 text-white" />
                 </Button>
               </div>
             </>
@@ -121,14 +121,14 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
           )}
         </div>
 
-        {/* Text Section */}
-        <div className="space-y-6">
-          <Badge variant="outline" className="text-blue-600 border-blue-600">
+        {/* Text Area */}
+        <div className="space-y-6 text-center lg:text-left">
+          <Badge variant="outline" className="text-blue-600 border-blue-600 mx-auto lg:mx-0">
             Your Growth Partner in
           </Badge>
-          <h1 className="text-6xl lg:text-4xl font-bold">{heading}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">{heading}</h1>
           <p
-            className="text-gray-600"
+            className="text-gray-600 text-base sm:text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </div>

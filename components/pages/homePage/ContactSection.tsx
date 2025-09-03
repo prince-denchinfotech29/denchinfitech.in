@@ -77,7 +77,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
   return (
     <section
       id="contact"
-      className="relative"
+      className="relative py-16 sm:py-20"
       style={{
         backgroundImage: `linear-gradient(rgba(13, 64, 78, 0.74), rgba(13, 64, 78, 0.54)), url(${contactback})`,
         backgroundAttachment: "fixed",
@@ -88,93 +88,94 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
     >
       <ToastContainer position="top-right" autoClose={3000} />
 
-      <div>
-        <div className="grid lg:grid-cols-2 gap-12">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-10">
           {/* Contact Form */}
-          <div className="py-25 bg-faq-50">
-            <div className="p-6">
-              <h2 className="text-4xl font-bold mb-6 text-white container">
-                FREE SEO ANALYSIS
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-4 container">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Input
-                    type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
-                    required
-                  />
-                  <Input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    maxLength={10}
-                    minLength={10}
-                    className="bg-red-500 text-white placeholder-white"
-                    required
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Your Email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
-                    required
-                  />
-                  <Input
-                    type="text"
-                    name="subject"
-                    placeholder="Subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
-                    required
-                  />
-                </div>
-
-                <Textarea
-                  name="message"
-                  placeholder="Your Message"
-                  rows={5}
-                  value={formData.message}
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+              FREE SEO ANALYSIS
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
                   onChange={handleInputChange}
-                  className="bg-red-500 text-white placeholder-white"
+                  aria-label="Your Name"
                   required
+                  className="bg-white/20 text-white placeholder-white"
                 />
+                <Input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  maxLength={10}
+                  minLength={10}
+                  aria-label="Phone Number"
+                  required
+                  className="bg-white/20 text-white placeholder-white"
+                />
+              </div>
 
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-brand-50 hover:bg-brand-50 text-white"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  aria-label="Email"
+                  required
+                  className="bg-white/20 text-white placeholder-white"
+                />
+                <Input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  aria-label="Subject"
+                  required
+                  className="bg-white/20 text-white placeholder-white"
+                />
+              </div>
+
+              <Textarea
+                name="message"
+                placeholder="Your Message"
+                rows={5}
+                value={formData.message}
+                onChange={handleInputChange}
+                aria-label="Message"
+                required
+                className="bg-white/20 text-white placeholder-white"
+              />
+
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
           </div>
 
           {/* FAQ Section */}
-          <div className="py-16 rounded-lg px-8 container">
-            <h2 className="text-3xl font-bold mb-6 text-white">
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 text-white">
+            <h2 className="text-3xl font-bold mb-6">
               FREQUENTLY ASKED QUESTIONS
             </h2>
-            <div className="space-y-4">
-              {faqs.length === 0 ? (
-                <p className="text-gray-300">No FAQs available at the moment.</p>
-              ) : (
-                <Accordion items={faqs} />
-              )}
-            </div>
+            {faqs.length === 0 ? (
+              <p className="text-gray-200">No FAQs available at the moment.</p>
+            ) : (
+              <Accordion items={faqs} />
+            )}
           </div>
         </div>
       </div>

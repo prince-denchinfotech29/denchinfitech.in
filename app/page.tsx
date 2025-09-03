@@ -13,7 +13,7 @@ function getBaseUrl(): string {
 
 export async function generateMetadata(): Promise<Metadata> {
   const homeData = await fetchHome();
-  const baseUrl = getBaseUrl(); // 👈 Get runtime domain
+  const baseUrl = getBaseUrl();
   const url = baseUrl + "/";
   const image = baseUrl + "/og-image.jpg";
 
