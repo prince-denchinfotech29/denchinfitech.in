@@ -60,7 +60,7 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
   }, []);
 
   return (
-    <section id="about" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 mt-16">
+    <section id="about" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         {/* Video/Image Area */}
         <div className="relative w-full aspect-video bg-black/50 rounded-lg overflow-hidden">
@@ -71,7 +71,7 @@ const AboutSection: FC<AboutSectionProps> = ({ homeAbout }) => {
                 alt="About Us"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 570px"
-                className="object-cover"
+                className=""
                 priority={true}
               />
               <div className="absolute inset-0 flex items-center justify-center">

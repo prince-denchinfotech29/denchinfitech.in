@@ -1,7 +1,7 @@
 // services.ts
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-const BASE_URL = "https://denchinfotech.in/react/admin/api";
+const BASE_URL = "https://denchinfotech.in/admin/api";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,

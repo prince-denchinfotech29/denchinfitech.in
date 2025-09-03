@@ -3,7 +3,7 @@ import dynamic from "next/dynamic"
 import { Metadata } from "next"
 import { getWhyUsDetails } from "@/components/auth/morepage"
 
-// Dynamic import client component (disable SSR)
+// Client component (disable SSR)
 const WhyUsPage = dynamic(() => import("@/components/pages/why-careers/way-us"), { ssr: false })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,7 +12,9 @@ export async function generateMetadata(): Promise<Metadata> {
     const meta = response.data.data.meta
 
     const title = meta?.meta_title || "Why Choose Us - Dench Infotech"
-    const description = meta?.meta_description || "Why choose Dench Infotech for software development and digital transformation."
+    const description =
+      meta?.meta_description ||
+      "Why choose Dench Infotech for software development and digital transformation."
     const keywords = meta?.meta_keyword || ""
 
     const siteName = "Dench Infotech"
@@ -23,9 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       keywords,
-      alternates: {
-        canonical: url,
-      },
+      alternates: { canonical: url },
       openGraph: {
         type: "website",
         title,
@@ -47,17 +47,13 @@ export async function generateMetadata(): Promise<Metadata> {
         description,
         images: [image],
       },
-      other: {
-        keywords,
-        viewport: "width=device-width, initial-scale=1",
-        charset: "utf-8",
-      },
     }
   } catch (error) {
     console.error("Failed to fetch metadata:", error)
     return {
       title: "Why Choose Us - Dench Infotech",
-      description: "Why choose Dench Infotech for software development and digital transformation.",
+      description:
+        "Why choose Dench Infotech for software development and digital transformation.",
     }
   }
 }

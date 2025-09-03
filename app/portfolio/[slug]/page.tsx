@@ -1,17 +1,10 @@
-// pages/portfolio/[slug].tsx
-import dynamic from "next/dynamic"
 import { Metadata } from "next"
-import { getPortfolioDetails } from "@/components/auth/portfolio"
-
-// Dynamically import the client-side PortfolioDetails component
-const PortfolioDetails = dynamic(() => import("@/components/pages/portfolio/portfolioDetails"), {
-  ssr: false,
-})
+import { getPortfolioDetails } from "@/components/auth/portfolio" // adjust import path
+import PortfolioDetails from "@/components/pages/portfolio/portfolioDetails"
+import { PortfolioDetail } from "@/components/auth/portfolio" // using the type you defined
 
 interface Props {
-  params: {
-    slug: string
-  }
+  params: { slug: string }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,25 +12,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const slug = params.slug
     const response = await getPortfolioDetails(slug)
 
+    const portfolio: PortfolioDetail = response?.data?.portfolio || {}
     const meta = response?.data?.meta || {}
-    const portfolio = response?.data?.portfolio || {}
-
     const title = meta.meta_title || portfolio.name || "Dench Infotech Portfolio"
     const description =
-      meta.meta_description || portfolio.short_content || "Explore our latest portfolio projects."
-    const keywords = meta.meta_keyword || ""
+      meta.meta_description ||
+      portfolio.short_content ||
+      "Explore our latest portfolio projects."
+    const keywords =
+      meta.meta_keyword ||
+      "portfolio projects, Dench Infotech work, app development examples, website showcase"
 
-    const siteName = "Dench Infotech"
     const url = `https://denchinfotech.in/portfolio/${slug}`
-    const image = portfolio.image_url || portfolio.photo || "https://denchinfotech.in/og-image.jpg"
+    const siteName = "Dench Infotech"
+    const image =
+      portfolio.image_url ||
+      portfolio.photo ||
+      "https://denchinfotech.in/og-image.jpg"
 
     return {
       title,
       description,
       keywords,
-      alternates: {
-        canonical: url,
-      },
+      alternates: { canonical: url },
       openGraph: {
         type: "article",
         title,
@@ -59,11 +56,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         images: [image],
       },
-      other: {
-        keywords,
-        viewport: "width=device-width, initial-scale=1",
-        charset: "utf-8",
-      },
     }
   } catch (error) {
     console.error("Failed to fetch metadata:", error)
@@ -74,6 +66,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function PortfolioSlug() {
-  return <PortfolioDetails />
+// Use portfolio details in page rendering
+export default async function PortfolioSlug({ params }: Props) {
+  const response = await getPortfolioDetails(params.slug)
+  const portfolio = response?.data?.portfolio || {}
+
+  return <PortfolioDetails portfolio={portfolio} />
 }

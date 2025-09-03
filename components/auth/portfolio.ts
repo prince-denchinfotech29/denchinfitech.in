@@ -1,6 +1,6 @@
 // src/api/index.ts
 
-const BASE_URL = 'https://denchinfotech.in/react/admin/api'
+const BASE_URL = 'https://denchinfotech.in/admin/api'
 
 export interface PortfolioItem {
   id: number
@@ -33,14 +33,14 @@ export interface PortfolioDetail {
   short_content?: string
   client_name?: string
   client_company?: string
-  client_comment?: string
+  client_comment?: string  
 }
 
 export interface PortfolioDetailsResponse {
   data: {
     portfolio: PortfolioDetail
     relatedPortfolios?: PortfolioDetail[]
-    meta?: {
+    meta: {
       meta_title?: string
       meta_description?: string
       meta_keyword?: string

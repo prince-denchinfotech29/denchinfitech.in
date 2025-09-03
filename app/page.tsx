@@ -3,7 +3,6 @@ import HomePage from "@/components/pages/homePage/Homepage";
 import { fetchHome } from "@/components/auth/home";
 import { headers } from "next/headers";
 
-
 function getBaseUrl(): string {
   const headersList = headers();
   const host = headersList.get("host");
@@ -25,8 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     homeData?.meta?.meta_description ||
     "Dench Infotech: Providing software development, app development, and digital marketing solutions tailored to your business needs.";
 
-  const keywords =
-    homeData?.meta?.meta_keyword || "";
+  const keywords = homeData?.meta?.meta_keyword || "";
 
   const siteName = "Dench Infotech";
 
@@ -58,8 +56,8 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       images: [image],
     },
-    other: {
-      "google-site-verification": "your_verification_code_here", // Optional
+    verification: {
+      google: "your_verification_code_here",
     },
   };
 }

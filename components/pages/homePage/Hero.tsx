@@ -88,7 +88,7 @@ export default function Carousel({ homeSlider = [] }: CarouselProps) {
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => onDragMove(e.touches[0].clientX);
   const handleTouchEnd = () => endDrag();
 
-  const heightClass = isMobile ? "h-[25vh]" : "h-[80vh]"; // reduced from 100vh to avoid CLS
+  const heightClass = isMobile ? "h-[25vh]" : "h-[100vh]"; // reduced from 100vh to avoid CLS
 
   return (
     <div

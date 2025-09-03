@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://denchinfotech.in/react/admin/api";
+const BASE_URL = "https://denchinfotech.in/admin/api";
 
 export interface Blog {
   id?: number;

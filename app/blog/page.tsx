@@ -1,23 +1,29 @@
-// app/blogs/page.tsx
+// app/blog/page.tsx
+
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
-import { getBlogs } from "@/components/auth/blogs";  // Adjust the import if needed
+import { getBlogs } from "@/components/auth/blogs";
+import BlogsPage from "@/components/pages/blog/BlogsPage";
 
-// Dynamically import the BlogsPage component (client-side)
-const BlogsPage = dynamic(() => import("@/components/pages/blog/BlogsPage"), { ssr: false });
-
+// ✅ Dynamically generate metadata using response from getBlogs
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const response = await getBlogs();
-    const meta = response.meta; 
 
-    const title = meta?.meta_title || "Dench Infotech - Blogs";
-    const description = meta?.meta_description || "Latest blogs on development, marketing, and more.";
-    const keywords = meta?.meta_keyword || "development, digital marketing, blogs";
+    // TypeScript fix: safely access meta if it exists
+    const meta = (response as any)?.meta || {}; // use proper type if available
 
+    const title = meta.meta_title || "Dench Infotech - Blogs";
+    const description =
+      meta.meta_description ||
+      "Latest blogs on development, marketing, and more.";
+    const keywords =
+      meta.meta_keyword || "development, digital marketing, blogs";
     const siteName = "Dench Infotech";
-    const url = "https://denchinfotech.in/blogs";
-    const image = "https://denchinfotech.in/og-image.jpg";
+
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "https://denchinfotech.in";
+    const url = `${baseUrl}/blogs`;
+    const image = `${baseUrl}/og-image.jpg`;
 
     return {
       title,
@@ -28,16 +34,16 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       openGraph: {
         type: "website",
+        url,
         title,
         description,
-        url,
         siteName,
         images: [
           {
             url: image,
             width: 1200,
             height: 630,
-            alt: siteName,
+            alt: "Dench Infotech",
           },
         ],
       },
@@ -47,21 +53,17 @@ export async function generateMetadata(): Promise<Metadata> {
         description,
         images: [image],
       },
-      other: {
-        keywords,
-        viewport: "width=device-width, initial-scale=1",
-        charset: "utf-8",
-      },
     };
   } catch (error) {
-    console.error("Failed to fetch metadata:", error);
+    console.error("Error generating metadata:", error);
     return {
       title: "Dench Infotech - Blogs",
-      description: "Stay updated with the latest blogs at Dench Infotech",
+      description: "Explore the latest blogs from Dench Infotech.",
     };
   }
 }
 
+// ✅ Blog Page Component
 export default function Blogs() {
   return <BlogsPage />;
 }
