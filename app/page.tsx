@@ -1,20 +1,18 @@
-import type { Metadata } from "next";
+// app/page.tsx
+
 import HomePage from "@/components/pages/homePage/Homepage";
 import { fetchHome } from "@/components/auth/home";
-import { headers } from "next/headers";
+import type { Metadata } from "next";
 
-function getBaseUrl(): string {
-  const headersList = headers();
-  const host = headersList.get("host");
-  const protocol = headersList.get("x-forwarded-proto") || "http";
-  return `${protocol}://${host}`;
-}
+// Optional: ISR (Incremental Static Regeneration) - refreshes every 60 seconds
+export const revalidate = 60;
 
+// SERVER-SIDE SEO Metadata
 export async function generateMetadata(): Promise<Metadata> {
   const homeData = await fetchHome();
-  const baseUrl = getBaseUrl();
-  const url = baseUrl + "/";
-  const image = baseUrl + "/og-image.jpg";
+  const baseUrl = "https://denchinfitech-in-bz37.vercel.app";
+  const url = `${baseUrl}/`;
+  const image = `${baseUrl}/og-image.jpg`;
 
   const title =
     homeData?.meta?.meta_title ||
@@ -25,8 +23,6 @@ export async function generateMetadata(): Promise<Metadata> {
     "Dench Infotech: Providing software development, app development, and digital marketing solutions tailored to your business needs.";
 
   const keywords = homeData?.meta?.meta_keyword || "";
-
-  const siteName = "Dench Infotech";
 
   return {
     title,
@@ -40,13 +36,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url,
-      siteName,
+      siteName: "Dench Infotech",
       images: [
         {
           url: image,
           width: 1200,
           height: 630,
-          alt: siteName,
+          alt: "Dench Infotech",
         },
       ],
     },
@@ -57,11 +53,14 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [image],
     },
     verification: {
-      google: "your_verification_code_here",
+      google: "your_verification_code_here", // <-- Add your actual Google Site Verification code
     },
   };
 }
 
-export default function Home() {
-  return <HomePage />;
+// Home Page Component
+export default async function Home() {
+  const homeData = await fetchHome();
+
+  return <HomePage data={homeData} />;
 }
