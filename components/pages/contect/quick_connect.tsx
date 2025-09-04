@@ -77,7 +77,7 @@ const QuickContactForm: React.FC = () => {
           value={formData.name}
           onChange={handleInputChange}
           required
-          className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+          className="animate-fade-in-up bg-color-500 text-black placeholder-black"
           style={{ animationDelay: "0.2s" }}
         />
 
@@ -88,7 +88,7 @@ const QuickContactForm: React.FC = () => {
           value={formData.email}
           onChange={handleInputChange}
           required
-          className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+          className="animate-fade-in-up bg-color-500 text-black placeholder-black"
           style={{ animationDelay: "0.4s" }}
         />
 
@@ -101,7 +101,7 @@ const QuickContactForm: React.FC = () => {
           maxLength={10}
           minLength={10}
           required
-          className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+          className="animate-fade-in-up bg-color-500 text-black placeholder-black"
           style={{ animationDelay: "0.6s" }}
         />
 
@@ -112,7 +112,7 @@ const QuickContactForm: React.FC = () => {
           onChange={handleInputChange}
           required
           rows={4}
-          className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+          className="animate-fade-in-up bg-color-500 text-black placeholder-black"
           style={{ animationDelay: "1s" }}
         />
 

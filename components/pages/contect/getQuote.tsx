@@ -148,7 +148,7 @@ const GetQuote: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Your name"
-                    className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+                    className="animate-fade-in-up bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -164,7 +164,7 @@ const GetQuote: React.FC = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="Your phone number"
-                    className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+                    className="animate-fade-in-up bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -182,7 +182,7 @@ const GetQuote: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="Your email address"
-                    className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+                    className="animate-fade-in-up bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -198,7 +198,7 @@ const GetQuote: React.FC = () => {
                     value={formData.subject}
                     onChange={handleInputChange}
                     placeholder="Message subject"
-                    className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+                    className="animate-fade-in-up bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -215,7 +215,7 @@ const GetQuote: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="Your message"
                   rows={6}
-                  className="animate-fade-in-up bg-red-500 text-black placeholder-black"
+                  className="animate-fade-in-up bg-color-500 text-black placeholder-black"
                   required
                 />
               </div>

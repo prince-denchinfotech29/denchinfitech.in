@@ -36,20 +36,20 @@ const DigitalMarketingSection: React.FC<Props> = ({ services = [] }) => {
             {services.map(({ id, image_url, heading, slug, category_name }) => {
               const categorySlug = slugify(category_name);
               return (
-                <div key={id} className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-2">
-                  <Link href={`/${categorySlug}/${slug}`} aria-label={`View service: ${heading}`}>
-                    <Card className="overflow-hidden hover:shadow-lg transition duration-300">
+                <div key={id} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3">
+                  <Link href={`/${categorySlug}/${slug}`} aria-label={`View service: ${heading}`} className="block">
+                   <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
                       <div className="aspect-video overflow-hidden">
                         <img
                           src={image_url}
                           alt={heading || "Service image"}
-                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                          className="w-full h-full transition-transform duration-300 hover:scale-105"
                           loading="lazy"
                           draggable={false}
                         />
                       </div>
                       <div className="bg-slate-800 text-white text-center py-6">
-                        <h3 className="text-lg font-semibold">{heading}</h3>
+                        <h3 className="text-xl font-semibold">{heading}</h3>
                       </div>
                     </Card>
                   </Link>

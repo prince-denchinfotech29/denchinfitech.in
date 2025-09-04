@@ -195,7 +195,7 @@ const ContactPage = () => {
                     value={formValues.name}
                     onChange={handleChange}
                     placeholder="Your name"
-                    className="bg-red-500 text-black placeholder-black"
+                    className="bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -208,7 +208,7 @@ const ContactPage = () => {
                     value={formValues.phone}
                     onChange={handleChange}
                     placeholder="Your phone number"
-                    className="bg-red-500 text-black placeholder-black"
+                    className="bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -224,7 +224,7 @@ const ContactPage = () => {
                     value={formValues.email}
                     onChange={handleChange}
                     placeholder="Your email address"
-                    className="bg-red-500 text-black placeholder-black"
+                    className="bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -237,7 +237,7 @@ const ContactPage = () => {
                     value={formValues.subject}
                     onChange={handleChange}
                     placeholder="Message subject"
-                    className="bg-red-500 text-black placeholder-black"
+                    className="bg-color-500 text-black placeholder-black"
                     required
                   />
                 </div>
@@ -251,7 +251,7 @@ const ContactPage = () => {
                   value={formValues.message}
                   onChange={handleChange}
                   placeholder="Your message"
-                  className="bg-red-500 text-black placeholder-black"
+                  className="bg-color-500 text-black placeholder-black"
                   rows={6}
                   required
                 />

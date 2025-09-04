@@ -104,7 +104,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
+                    className="bg-color-500 text-white placeholder-white"
                     required
                   />
                   <Input
@@ -115,7 +115,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
                     onChange={handleInputChange}
                     maxLength={10}
                     minLength={10}
-                    className="bg-red-500 text-white placeholder-white"
+                    className="bg-color-500 text-white placeholder-white"
                     required
                   />
                 </div>
@@ -127,7 +127,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
+                    className="bg-color-500 text-white placeholder-white"
                     required
                   />
                   <Input
@@ -136,7 +136,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
                     placeholder="Subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="bg-red-500 text-white placeholder-white"
+                    className="bg-color-500 text-white placeholder-white"
                     required
                   />
                 </div>
@@ -147,7 +147,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ faqs = [] }) => {
                   rows={5}
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="bg-red-500 text-white placeholder-white"
+                  className="bg-color-500 text-white placeholder-white"
                   required
                 />
 

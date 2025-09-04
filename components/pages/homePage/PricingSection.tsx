@@ -34,7 +34,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ pricings = [] }) => {
   if (!pricings.length) return null;
 
   return (
-    <section id="pricing" className="py-16">
+  <section id="pricing" className="py-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-6xl lg:text-4xl font-bold py-4">PRICING TABLE</h1>
@@ -43,7 +43,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ pricings = [] }) => {
           </h6>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {pricings.map(
             (
               { icon, title, price, subtitle, features, button_text, buttonText },
@@ -65,14 +65,14 @@ const PricingSection: React.FC<PricingSectionProps> = ({ pricings = [] }) => {
                       aria-hidden="true"
                     >
                       {IconComponent && (
-                        <IconComponent className="w-16 h-16 text-white" />
+                        <IconComponent  className="w-16 h-16 text-white" />
                       )}
                     </div>
 
                     {/* Title & Price */}
                     <h1
                       id={`pricing-title-${index}`}
-                      className="text-2xl font-bold"
+                      className="text-2xl"
                     >
                       {title}
                     </h1>

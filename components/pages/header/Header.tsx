@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { RadixDropdown } from "@/components/ui/dropdown";
 import Image from "next/image";
+import TopNav from './TopBar';  // Adjust the import path accordingly
 
 interface Service {
   heading: string;
@@ -16,12 +17,22 @@ interface Category {
   services: Service[];
 }
 
+interface SocialLinks {
+  facebook?: string;
+  twitter?: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
 interface HomeSetting {
   logo?: string;
+  top_bar_email?: string;
+  top_bar_phone?: string;
 }
 
 interface HomeData {
   setting?: HomeSetting;
+  social_media?: SocialLinks;
 }
 
 interface NavbarProps {
@@ -39,7 +50,7 @@ export default function Navbar({ homeData, navData }: NavbarProps) {
   if (!setting || !categories?.length) {
     return (
       <div className="bg-yellow-100 text-center p-4">
-        ⚠️ Navbar: Required data missing. Please check props.
+        Navbar: Required data missing. Please check props.
       </div>
     );
   }
@@ -59,39 +70,107 @@ export default function Navbar({ homeData, navData }: NavbarProps) {
   });
 
   return (
-    <nav className="bg-white sticky top-0 z-50 border-b shadow-md">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            {logo ? (
-              <Image
-                src={logo}
-                alt="Logo"
-                width={128}
-                height={64}
-                className="h-16 w-auto"
-                priority
-              />
-            ) : (
-              <div className="h-16 w-32 bg-gray-300 flex items-center justify-center">
-                LOGO
-              </div>
-            )}
-          </Link>
+    <>
+      {/* Top Bar */}
+      <TopNav topBarData={homeData.setting} socialLinks={homeData.social_media} />
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+      {/* Main Navbar */}
+      <nav className="bg-white sticky top-0 z-50 border-b shadow-md">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link href="/" className="flex items-center">
+              {logo ? (
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width={128}
+                  height={64}
+                  className="h-16 w-auto"
+                  priority
+                />
+              ) : (
+                <div className="h-16 w-32 bg-gray-300 flex items-center justify-center">
+                  LOGO
+                </div>
+              )}
+            </Link>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <Link href="/" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+                HOME
+              </Link>
+              {menuItems.map(({ title, slug, items }) => (
+                <RadixDropdown key={title} title={title} slug={slug} items={items} />
+              ))}
+              <Link href="/blog" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+                BLOGS
+              </Link>
+              <Link href="/contact" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+                CONTACT
+              </Link>
+              <Link href="/get-quote">
+                <button className="bg-[#0d404e] text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-all">
+                  GET QUOTE ➜
+                </button>
+              </Link>
+            </div>
+
+            {/* Mobile Toggle */}
+            <div className="md:hidden">
+              <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-xl">
+                {mobileOpen ? "✕" : "☰"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <div className="md:hidden px-4 pt-4 pb-6 space-y-3 bg-white border-t">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
               HOME
             </Link>
+
             {menuItems.map(({ title, slug, items }) => (
-              <RadixDropdown key={title} title={title} slug={slug} items={items} />
+              <div key={title}>
+                <button
+                  className="flex justify-between w-full font-medium text-left text-[#0f3e49]"
+                  onClick={() => setOpenCategory(openCategory === title ? null : title)}
+                >
+                  <span>{title}</span>
+                  <span>{openCategory === title ? "−" : "+"}</span>
+                </button>
+
+                {openCategory === title && (
+                  <div className="pl-4 mt-2 space-y-1">
+                    <Link
+                      href={`/${slug}`}
+                      onClick={() => setMobileOpen(false)}
+                      className="block text-sm text-[#0f3e49] hover:text-pink-600"
+                    >
+                      All {title}
+                    </Link>
+                    {items.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={`/${slug}/${item.slug}`}
+                        onClick={() => setMobileOpen(false)}
+                        className="block text-sm text-gray-600 hover:text-pink-600"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-            <Link href="/blog" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+
+            <Link href="/blog" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
               BLOGS
             </Link>
-            <Link href="/contact" className="text-[#0f3e49] hover:text-pink-600 font-medium">
+            <Link href="/contact" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
               CONTACT
             </Link>
             <Link href="/get-quote">
@@ -100,70 +179,8 @@ export default function Navbar({ homeData, navData }: NavbarProps) {
               </button>
             </Link>
           </div>
-
-          {/* Mobile Toggle */}
-          <div className="md:hidden">
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-xl">
-              {mobileOpen ? "✕" : "☰"}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="md:hidden px-4 pt-4 pb-6 space-y-3 bg-white border-t">
-          <Link href="/" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
-            HOME
-          </Link>
-
-          {menuItems.map(({ title, slug, items }) => (
-            <div key={title}>
-              <button
-                className="flex justify-between w-full font-medium text-left text-[#0f3e49]"
-                onClick={() => setOpenCategory(openCategory === title ? null : title)}
-              >
-                <span>{title}</span>
-                <span>{openCategory === title ? "−" : "+"}</span>
-              </button>
-
-              {openCategory === title && (
-                <div className="pl-4 mt-2 space-y-1">
-                  <Link
-                    href={`/${slug}`}
-                    onClick={() => setMobileOpen(false)}
-                    className="block text-sm text-[#0f3e49] hover:text-pink-600"
-                  >
-                    All {title}
-                  </Link>
-                  {items.map((item, idx) => (
-                    <Link
-                      key={idx}
-                      href={`/${slug}/${item.slug}`}
-                      onClick={() => setMobileOpen(false)}
-                      className="block text-sm text-gray-600 hover:text-pink-600"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-
-          <Link href="/blog" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
-            BLOGS
-          </Link>
-          <Link href="/contact" onClick={() => setMobileOpen(false)} className="block font-medium text-[#0f3e49] hover:text-pink-600">
-            CONTACT
-          </Link>
-          <Link href="/get-quote">
-            <button className="bg-[#0d404e] text-white px-4 py-2 rounded-full hover:bg-pink-600 transition-all">
-              GET QUOTE ➜
-            </button>
-          </Link>
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
+    </>
   );
 }

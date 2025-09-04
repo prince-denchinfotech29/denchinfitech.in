@@ -25,9 +25,9 @@ const BlogDetailsPage: React.FC<BlogDetailsPageProps> = ({ blogData }) => {
 
 
   return (
+    <>
+    <Navbar homeData={homeData} navData={navData} />
     <div className="min-h-screen bg-white">
-      <Navbar homeData={homeData} navData={navData} />
-
       <header
         className="w-full py-20 mb-16 text-white text-center relative"
         style={{
@@ -91,8 +91,6 @@ const BlogDetailsPage: React.FC<BlogDetailsPageProps> = ({ blogData }) => {
                           <h6 className="font-semibold text-sm text-blue-600 hover:text-blue-800 line-clamp-2 mb-1">
                             {post.heading}
                           </h6>
-                        
-                          
                         </div>
                       </Card>
                     </Link>
@@ -123,6 +121,7 @@ const BlogDetailsPage: React.FC<BlogDetailsPageProps> = ({ blogData }) => {
 
       <Footer homeData={homeData} />
     </div>
+    </>
   );
 };
 
